@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glue Guy — The Podcast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:   #002654;
+      --royal:  #4A6FA5;
+      --steel:  #A8BBCF;
+      --frost:  #E8EEF4;
+      --slate:  #6B7280;
+      --white:  #FFFFFF;
+      --ink:    #0D1B2A;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(0, 38, 84, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(168, 187, 207, 0.15);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--white);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--steel);
+      font-size: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      display: block;
+      line-height: 1;
+      margin-top: -2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--steel);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--royal) !important;
+      color: var(--white) !important;
+      padding: 8px 20px !important;
+      border-radius: 2px;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: #5a80b8 !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 100px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: 'GLUE GUY';
+      position: absolute;
+      bottom: -40px;
+      right: -20px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(120px, 18vw, 260px);
+      color: rgba(74, 111, 165, 0.08);
+      line-height: 1;
+      pointer-events: none;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-left {
+      max-width: 580px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--royal);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--royal);
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 8vw, 108px);
+      line-height: 0.92;
+      color: var(--white);
+      letter-spacing: 0.02em;
+      margin-bottom: 28px;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--steel);
+    }
+
+    .hero-sub {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--steel);
+      line-height: 1.65;
+      margin-bottom: 48px;
+      max-width: 440px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--white);
+      color: var(--navy);
+      padding: 14px 32px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover { background: var(--frost); transform: translateY(-1px); }
+
+    .btn-secondary {
+      border: 1px solid rgba(168, 187, 207, 0.4);
+      color: var(--steel);
+      padding: 14px 32px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--steel); color: var(--white); }
+
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .logo-placeholder {
+      width: 320px;
+      height: 320px;
+      border: 1px solid rgba(74, 111, 165, 0.3);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: rgba(74, 111, 165, 0.06);
+    }
+
+    .logo-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, rgba(74,111,165,0.3), transparent 50%, rgba(74,111,165,0.1));
+      pointer-events: none;
+    }
+
+    .logo-placeholder-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: var(--white);
+      letter-spacing: 0.1em;
+      line-height: 1;
+    }
+
+    .logo-placeholder-sub {
+      font-size: 0.7rem;
+      color: var(--steel);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    .logo-swap-note {
+      position: absolute;
+      bottom: -32px;
+      font-size: 0.65rem;
+      color: rgba(168,187,207,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ─── LISTEN BAR ─── */
+    .listen-bar {
+      background: var(--frost);
+      border-top: 1px solid rgba(0,38,84,0.08);
+      border-bottom: 1px solid rgba(0,38,84,0.08);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .listen-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-right: 8px;
+    }
+
+    .platform-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border: 1px solid var(--steel);
+      border-radius: 2px;
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .platform-btn:hover {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+
+    .platform-icon { font-size: 1rem; }
+
+    /* ─── SECTION SHARED ─── */
+    section { padding: 100px 48px; }
+
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--royal);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 48px;
+      height: 1px;
+      background: var(--royal);
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 4.5vw, 56px);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .section-body {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--slate);
+      max-width: 600px;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-segments {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .segment-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--frost);
+      align-items: start;
+    }
+
+    .segment-item:first-child { border-top: 1px solid var(--frost); }
+
+    .segment-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--steel);
+      line-height: 1;
+    }
+
+    .segment-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .segment-desc {
+      font-size: 0.85rem;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    /* ─── EPISODES ─── */
+    #episodes {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #episodes .section-title { color: var(--white); }
+    #episodes .section-label { color: var(--steel); }
+    #episodes .section-label::after { background: var(--steel); }
+
+    .episodes-grid {
+      margin-top: 52px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: rgba(168,187,207,0.15);
+      border: 1px solid rgba(168,187,207,0.15);
+    }
+
+    .episode-card {
+      background: rgba(0, 38, 84, 0.6);
+      padding: 32px 28px;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .episode-card:hover { background: rgba(74, 111, 165, 0.2); }
+
+    .ep-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--royal);
+    }
+
+    .ep-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--white);
+      letter-spacing: 0.03em;
+      line-height: 1.15;
+    }
+
+    .ep-desc {
+      font-size: 0.82rem;
+      color: var(--steel);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .ep-meta {
+      font-size: 0.7rem;
+      color: rgba(168,187,207,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      gap: 16px;
+    }
+
+    .ep-arrow {
+      position: absolute;
+      top: 28px; right: 24px;
+      color: var(--royal);
+      font-size: 1rem;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .episode-card:hover .ep-arrow { opacity: 1; transform: translate(2px, -2px); }
+
+    .placeholder-ep {
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    /* ─── BLOG / RUNDOWN ─── */
+    #rundown {
+      background: var(--frost);
+    }
+
+    .rundown-grid {
+      margin-top: 52px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+    }
+
+    .rundown-card {
+      background: var(--white);
+      border: 1px solid rgba(0,38,84,0.08);
+      padding: 32px 28px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-radius: 2px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .rundown-card:hover {
+      box-shadow: 0 8px 32px rgba(0,38,84,0.1);
+      transform: translateY(-2px);
+    }
+
+    .rundown-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--royal);
+    }
+
+    .rundown-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+
+    .rundown-excerpt {
+      font-size: 0.85rem;
+      color: var(--slate);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .rundown-date {
+      font-size: 0.7rem;
+      color: var(--steel);
+      letter-spacing: 0.08em;
+    }
+
+    .rundown-placeholder {
+      opacity: 0.4;
+    }
+
+    /* ─── SUBMIT ─── */
+    #submit {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .submit-rules {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .rule-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .rule-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--steel);
+      line-height: 1;
+      min-width: 28px;
+    }
+
+    .rule-text {
+      font-size: 0.88rem;
+      color: var(--slate);
+      line-height: 1.6;
+      padding-top: 4px;
+    }
+
+    .rule-text strong { color: var(--navy); }
+
+    .submit-form {
+      background: var(--frost);
+      border: 1px solid rgba(0,38,84,0.08);
+      padding: 40px 36px;
+      border-radius: 2px;
+    }
+
+    .form-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--navy);
+      letter-spacing: 0.04em;
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid rgba(0,38,84,0.15);
+      border-radius: 2px;
+      background: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      border-color: var(--royal);
+    }
+
+    .form-textarea { resize: vertical; min-height: 90px; }
+
+    .form-upload {
+      width: 100%;
+      padding: 20px;
+      border: 1.5px dashed rgba(0,38,84,0.2);
+      border-radius: 2px;
+      background: var(--white);
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      font-size: 0.82rem;
+      color: var(--slate);
+    }
+
+    .form-upload:hover {
+      border-color: var(--royal);
+      background: rgba(74,111,165,0.03);
+    }
+
+    .form-upload strong { display: block; color: var(--navy); margin-bottom: 4px; font-size: 0.88rem; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      padding: 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn-submit:hover { background: var(--royal); }
+
+    .form-note {
+      font-size: 0.7rem;
+      color: var(--steel);
+      text-align: center;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy);
+      padding: 60px 48px 40px;
+      border-top: 1px solid rgba(168,187,207,0.1);
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(168,187,207,0.1);
+    }
+
+    .footer-brand-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--white);
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+
+    .footer-tagline {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      font-size: 0.88rem;
+      color: var(--steel);
+      margin-top: 8px;
+      max-width: 280px;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 64px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col a {
+      font-size: 0.85rem;
+      color: rgba(168,187,207,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: var(--white); }
+
+    .footer-bottom {
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      color: rgba(168,187,207,0.35);
+      letter-spacing: 0.06em;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-social a {
+      font-size: 0.72rem;
+      color: rgba(168,187,207,0.35);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-social a:hover { color: var(--white); }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--steel), transparent);
+      opacity: 0.2;
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 80px; }
+      .hero-right { display: none; }
+      section { padding: 72px 24px; }
+      #about { grid-template-columns: 1fr; gap: 48px; }
+      #submit { grid-template-columns: 1fr; gap: 48px; }
+      .rundown-grid { grid-template-columns: 1fr; }
+      .listen-bar { padding: 20px 24px; }
+      .footer-top { flex-direction: column; gap: 40px; }
+      .footer-links { gap: 40px; }
+      footer { padding: 48px 24px 32px; }
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow  { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
+    .hero-title    { animation: fadeUp 0.6s ease both; animation-delay: 0.2s; }
+    .hero-sub      { animation: fadeUp 0.6s ease both; animation-delay: 0.35s; }
+    .hero-actions  { animation: fadeUp 0.6s ease both; animation-delay: 0.5s; }
+    .logo-placeholder { animation: fadeUp 0.8s ease both; animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      Glue Guy
+      <span>The Podcast</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#episodes">Episodes</a></li>
+      <li><a href="#rundown">The Rundown</a></li>
+      <li><a href="#submit" class="nav-cta">Submit a Take</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Weekly Sports + Life Podcast</div>
+      <h1 class="hero-title">
+        The Role<br>
+        Player's<br>
+        <em>Podcast.</em>
+      </h1>
+      <p class="hero-sub">
+        For the guys who take sports seriously but also have jobs, families, and real lives. Sharp takes. Real guests. No filler.
+      </p>
+      <div class="hero-actions">
+        <a href="#episodes" class="btn-primary">
+          <span>▶</span> Latest Episode
+        </a>
+        <a href="#submit" class="btn-secondary">Submit a Take</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="logo-placeholder">
+        <div class="logo-placeholder-text">GG</div>
+        <div class="logo-placeholder-sub">Your logo here</div>
+        <div class="logo-swap-note">← swap with your wordmark</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTEN BAR -->
+  <div class="listen-bar">
+    <span class="listen-label">Listen on</span>
+    <a href="#" class="platform-btn"><span class="platform-icon">🎧</span> Spotify</a>
+    <a href="#" class="platform-btn"><span class="platform-icon">🎙</span> Apple Podcasts</a>
+    <a href="#" class="platform-btn"><span class="platform-icon">▶</span> YouTube</a>
+    <a href="#" class="platform-btn"><span class="platform-icon">◉</span> Pocket Casts</a>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-left">
+      <div class="section-label">The Show</div>
+      <h2 class="section-title">What Is<br>Glue Guy?</h2>
+      <p class="section-body">
+        The glue guy is the role player who holds everything together without getting the credit. On the court, in the office, at home. That's the show. That's the audience. Hosted by Cannon Simmons — not a media personality, just a guy with real takes and a genuine love for sports.
+      </p>
+      <p class="section-body" style="margin-top: 16px;">
+        Every week: the biggest stories in sports, a guest worth knowing, and takes from real listeners. 45-60 minutes. No fluff.
+      </p>
+    </div>
+    <div class="about-segments">
+      <div class="segment-item">
+        <div class="segment-num">01</div>
+        <div>
+          <div class="segment-name">The Rundown</div>
+          <div class="segment-desc">Cannon's solo monologue. The 4–5 biggest things in sports that week plus 1–2 from business, politics, or culture. Opinionated. Confident. Not just informative.</div>
+        </div>
+      </div>
+      <div class="segment-item">
+        <div class="segment-num">02</div>
+        <div>
+          <div class="segment-name">The Guest</div>
+          <div class="segment-desc">A guest interesting by virtue of their career or life stage — not necessarily famous, but compelling. Sports is the entry point. Work and life bleed in naturally.</div>
+        </div>
+      </div>
+      <div class="segment-item">
+        <div class="segment-num">03</div>
+        <div>
+          <div class="segment-name">Glue Guys</div>
+          <div class="segment-desc">The call-in segment. Listeners send 60–90 second voice memos — sports, culture, parenting, work, life. Cannon plays the audio and reacts live. 3–4 callers per episode.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EPISODES -->
+  <section id="episodes">
+    <div class="section-label">Latest</div>
+    <h2 class="section-title" style="color: var(--white);">Episodes</h2>
+
+    <div class="episodes-grid">
+
+      <!-- Placeholder — replace with ep 1 -->
+      <a href="#" class="episode-card placeholder-ep">
+        <div class="ep-num">EP. 001</div>
+        <div class="ep-title">Coming Soon</div>
+        <div class="ep-desc">The first episode drops soon. Subscribe on Spotify or Apple Podcasts so you don't miss it.</div>
+        <div class="ep-meta">
+          <span>45 min</span>
+          <span>The Rundown · Guest · Glue Guys</span>
+        </div>
+        <div class="ep-arrow">↗</div>
+      </a>
+
+      <a href="#" class="episode-card placeholder-ep">
+        <div class="ep-num">EP. 002</div>
+        <div class="ep-title">In the Works</div>
+        <div class="ep-desc">Weekly episodes every Tuesday. Sports, culture, business, life — from the perspective of a peer, not a pundit.</div>
+        <div class="ep-meta">
+          <span>Weekly</span>
+          <span>Tuesdays</span>
+        </div>
+        <div class="ep-arrow">↗</div>
+      </a>
+
+      <a href="#" class="episode-card placeholder-ep">
+        <div class="ep-num">EP. 003</div>
+        <div class="ep-title">Want In Early?</div>
+        <div class="ep-desc">Submit a voice memo take now. Early submissions have the best shot at making the Glue Guys segment on episode one.</div>
+        <div class="ep-meta">
+          <span>Submit below</span>
+          <span>60–90 sec takes</span>
+        </div>
+        <div class="ep-arrow">↗</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- RUNDOWN / BLOG -->
+  <section id="rundown">
+    <div class="section-label">The Rundown</div>
+    <h2 class="section-title">Written Takes</h2>
+    <p class="section-body" style="color: var(--slate);">
+      The written version of Segment 1. Cannon's takes on the week in sports, business, and life — in long form.
+    </p>
+
+    <div class="rundown-grid" style="margin-top: 52px;">
+
+      <a href="#" class="rundown-card rundown-placeholder">
+        <div class="rundown-tag">Sports</div>
+        <div class="rundown-title">First post drops with episode one</div>
+        <div class="rundown-excerpt">Cannon's written takes will live here — the same Rundown energy from the podcast, in long form. Subscribe to get them in your inbox.</div>
+        <div class="rundown-date">Coming soon</div>
+      </a>
+
+      <a href="#" class="rundown-card rundown-placeholder">
+        <div class="rundown-tag">Culture</div>
+        <div class="rundown-title">What Actually Matters This Week</div>
+        <div class="rundown-excerpt">Not just sports. Business decisions that matter, cultural shifts that affect real people, and the stuff your group chat is actually talking about.</div>
+        <div class="rundown-date">Weekly</div>
+      </a>
+
+      <a href="#" class="rundown-card rundown-placeholder">
+        <div class="rundown-tag">Life</div>
+        <div class="rundown-title">The Glue Guy Perspective</div>
+        <div class="rundown-excerpt">For the guys in their late 20s and 30s who take sports seriously but also have a job, a family, and a mortgage. You know who you are.</div>
+        <div class="rundown-date">Every Tuesday</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- SUBMIT A TAKE -->
+  <section id="submit">
+    <div>
+      <div class="section-label">Segment 3</div>
+      <h2 class="section-title">Submit<br>Your Take</h2>
+      <p class="section-body">
+        Got a take? Send a 60–90 second voice memo. Sports, culture, parenting, work, whatever. The best ones make the show. Cannon plays the audio and reacts live.
+      </p>
+
+      <div class="submit-rules">
+        <div class="rule-item">
+          <div class="rule-num">01</div>
+          <div class="rule-text"><strong>Keep it 60–90 seconds.</strong> Long enough to have a real take. Short enough to stay sharp.</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num">02</div>
+          <div class="rule-text"><strong>Any topic.</strong> Sports is the entry point but not the limit. Work, parenting, pop culture — bring it.</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num">03</div>
+          <div class="rule-text"><strong>Submit within the window.</strong> Submissions open 72 hours before recording each week. Timing is posted on social.</div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num">04</div>
+          <div class="rule-text"><strong>Be yourself.</strong> Don't perform for the mic. Talk like you would in the group chat.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-form">
+      <div class="form-title">Drop Your Take</div>
+
+      <div class="form-group">
+        <label class="form-label" for="name">Your Name</label>
+        <input class="form-input" type="text" id="name" name="name" placeholder="First name or handle" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="location">City / State</label>
+        <input class="form-input" type="text" id="location" name="location" placeholder="Where are you from?" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="topic">Topic</label>
+        <select class="form-select" id="topic" name="topic">
+          <option value="" disabled selected>What's your take on?</option>
+          <option>Sports</option>
+          <option>Culture / Pop Culture</option>
+          <option>Work / Career</option>
+          <option>Parenting</option>
+          <option>Life in your 20s/30s</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Voice Memo</label>
+        <div class="form-upload" onclick="document.getElementById('audio-upload').click()">
+          <strong>Upload your audio file</strong>
+          .m4a, .mp3, or .wav — 60 to 90 seconds
+          <input type="file" id="audio-upload" accept="audio/*" style="display:none" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="preview">One-liner (optional)</label>
+        <textarea class="form-textarea" id="preview" name="preview" placeholder="What's the take in one sentence? Helps with context."></textarea>
+      </div>
+
+      <button class="btn-submit" type="submit">Send My Take →</button>
+      <p class="form-note">Submissions are reviewed before each episode. By submitting, you're okay with your audio being played on the show.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Glue Guy</div>
+        <div class="footer-tagline">The role player who holds everything together. That's the show. That's you.</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Listen</h4>
+          <ul>
+            <li><a href="#">Spotify</a></li>
+            <li><a href="#">Apple Podcasts</a></li>
+            <li><a href="#">YouTube</a></li>
+            <li><a href="#">Pocket Casts</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Show</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#episodes">Episodes</a></li>
+            <li><a href="#rundown">The Rundown</a></li>
+            <li><a href="#submit">Submit a Take</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">Twitter / X</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Newsletter</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Glue Guy Podcast. All rights reserved.</span>
+      <div class="footer-social">
+        <a href="#">X</a>
+        <a href="#">Instagram</a>
+        <a href="#">Spotify</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
