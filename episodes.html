@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Episodes — The Glue Guy Podcast</title>
+  <meta name="description" content="All episodes of The Glue Guy Podcast. New episodes every Monday." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root { --navy:#002654; --royal:#4A6FA5; --steel:#A8BBCF; --frost:#E8EEF4; --slate:#6B7280; --white:#FFFFFF; --ink:#0D1B2A; --rule:rgba(0,38,84,0.1); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    nav { position: sticky; top: 0; z-index: 900; background: var(--navy); border-bottom: 3px solid rgba(74,111,165,0.6); }
+    .nav-inner { display: flex; align-items: stretch; justify-content: space-between; padding: 0 48px; height: 64px; max-width: 1400px; margin: 0 auto; }
+    .nav-logo { display: flex; flex-direction: column; justify-content: center; padding-right: 28px; margin-right: 28px; border-right: 1px solid rgba(168,187,207,0.15); }
+    .nav-logo-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--white); letter-spacing: 0.06em; line-height: 1; }
+    .nav-logo-sub { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--royal); margin-top: 2px; }
+    .nav-links { display: flex; align-items: stretch; list-style: none; flex: 1; }
+    .nav-links li { display: flex; align-items: stretch; }
+    .nav-links a { display: flex; align-items: center; padding: 0 18px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); border-bottom: 3px solid transparent; margin-bottom: -3px; transition: color 0.15s, border-color 0.15s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); border-color: var(--white); }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-cta { background: var(--royal); color: var(--white); padding: 9px 20px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 2px; transition: background 0.2s; }
+    .nav-cta:hover { background: #5a80b8; }
+    .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; cursor: pointer; padding: 8px; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--navy); border-bottom: 2px solid var(--royal); z-index: 899; padding: 16px 24px 24px; flex-direction: column; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); border-bottom: 1px solid rgba(168,187,207,0.1); transition: color 0.15s; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu .mobile-cta { margin-top: 12px; background: var(--royal); color: var(--white) !important; padding: 13px 20px; text-align: center; border-radius: 2px; border-bottom: none !important; }
+
+    .page-header { background: var(--navy); padding: 64px 48px 52px; border-bottom: 1px solid rgba(168,187,207,0.1); }
+    .page-header-inner { max-width: 1400px; margin: 0 auto; }
+    .page-eyebrow { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--royal); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .page-eyebrow::before { content:''; width:24px; height:2px; background:var(--royal); }
+    .page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 5vw, 72px); color: var(--white); letter-spacing: 0.03em; line-height: 1; margin-bottom: 12px; }
+    .page-sub { font-size: 0.92rem; color: var(--steel); line-height: 1.6; max-width: 520px; }
+
+    .episodes-page { padding: 64px 48px; max-width: 1400px; margin: 0 auto; }
+
+    .listen-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 20px 0 40px; border-bottom: 1px solid var(--rule); margin-bottom: 48px; }
+    .listen-bar-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--slate); margin-right: 4px; }
+    .platform-chip { display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px; border: 1px solid var(--rule); border-radius: 2px; font-size: 0.76rem; font-weight: 600; color: var(--navy); transition: background 0.15s, border-color 0.15s; }
+    .platform-chip:hover { background: var(--frost); border-color: var(--steel); }
+
+    .ep-grid { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; }
+    .ep-row { background: var(--white); padding: 28px 32px; display: grid; grid-template-columns: 80px 1fr auto; gap: 24px; align-items: center; transition: background 0.15s; cursor: pointer; }
+    .ep-row:hover { background: var(--frost); }
+    .ep-row.placeholder { opacity: 0.35; pointer-events: none; }
+    .ep-row-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--steel); letter-spacing: 0.04em; line-height: 1; }
+    .ep-row-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 6px; }
+    .ep-row-meta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .ep-row-guest { font-size: 0.78rem; color: var(--slate); font-style: italic; }
+    .ep-row-date { font-size: 0.68rem; color: var(--steel); letter-spacing: 0.08em; }
+    .ep-row-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 8px; border-radius: 2px; background: rgba(74,111,165,0.1); color: var(--royal); }
+    .ep-row-play { display: inline-flex; align-items: center; gap: 6px; background: var(--navy); color: var(--white); padding: 9px 18px; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 2px; white-space: nowrap; transition: background 0.2s; }
+    .ep-row-play:hover { background: var(--royal); }
+    .ep-coming { background: var(--frost); padding: 48px 32px; text-align: center; border-top: 1px solid var(--rule); }
+    .ep-coming-hed { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--navy); letter-spacing: 0.04em; margin-bottom: 8px; }
+    .ep-coming-sub { font-size: 0.86rem; color: var(--slate); line-height: 1.6; }
+
+    footer { background: var(--ink); }
+    .footer-bottom { padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(168,187,207,0.07); }
+    .footer-copy { font-size: 0.65rem; color: rgba(168,187,207,0.22); letter-spacing: 0.08em; }
+    .footer-social { display: flex; gap: 22px; }
+    .footer-social a { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(168,187,207,0.22); transition: color 0.2s; }
+    .footer-social a:hover { color: var(--white); }
+
+    @media (max-width: 768px) {
+      .nav-inner { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-right { display: none; }
+      .nav-hamburger { display: flex; }
+      .page-header { padding: 48px 20px 36px; }
+      .episodes-page { padding: 40px 20px; }
+      .ep-row { grid-template-columns: 56px 1fr; gap: 16px; padding: 20px; }
+      .ep-row-play { display: none; }
+      .footer-bottom { padding: 16px 20px; flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-name">The Glue Guy</div>
+        <div class="nav-logo-sub">Podcast</div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="episodes.html" class="active">Episodes</a></li>
+        <li><a href="blog.html">The Rundown</a></li>
+        <li><a href="index.html#submit">Submit a Take</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="index.html#submit" class="nav-cta">Submit a Take</a>
+      </div>
+      <div class="nav-hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html#about" onclick="toggleMenu()">About</a>
+    <a href="episodes.html" onclick="toggleMenu()">Episodes</a>
+    <a href="blog.html" onclick="toggleMenu()">The Rundown</a>
+    <a href="index.html#submit" onclick="toggleMenu()" class="mobile-cta">Submit a Take</a>
+  </div>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="page-eyebrow">The Glue Guy Podcast</div>
+      <div class="page-title">Episodes</div>
+      <div class="page-sub">New episodes every Monday. Sports, culture, and business — the stories that matter, covered for people who don't have time to waste.</div>
+    </div>
+  </div>
+
+  <div class="episodes-page">
+
+    <div class="listen-bar">
+      <span class="listen-bar-label">Subscribe on</span>
+      <a href="#" class="platform-chip" target="_blank">🎧 Spotify</a>
+      <a href="#" class="platform-chip" target="_blank">🎙 Apple Podcasts</a>
+      <a href="https://www.youtube.com/@GlueGuyPodcast" class="platform-chip" target="_blank">▶ YouTube</a>
+      <a href="#" class="platform-chip" target="_blank">◉ Pocket Casts</a>
+    </div>
+
+    <div class="ep-grid">
+      <!-- Replace these with real episodes as they drop -->
+      <div class="ep-row placeholder">
+        <div class="ep-row-num">001</div>
+        <div>
+          <div class="ep-row-title">Episode 1 — Coming Soon</div>
+          <div class="ep-row-meta">
+            <span class="ep-row-guest">Subscribe to be notified when it drops</span>
+            <span class="ep-row-date">Every Monday</span>
+            <span class="ep-row-tag">Sports</span>
+          </div>
+        </div>
+        <a href="#" class="ep-row-play">▶ Listen</a>
+      </div>
+      <div class="ep-row placeholder">
+        <div class="ep-row-num">002</div>
+        <div>
+          <div class="ep-row-title">Episode 2 — In the Works</div>
+          <div class="ep-row-meta">
+            <span class="ep-row-guest">~50 min · Weekly</span>
+            <span class="ep-row-tag">Culture</span>
+          </div>
+        </div>
+        <a href="#" class="ep-row-play">▶ Listen</a>
+      </div>
+      <div class="ep-coming">
+        <div class="ep-coming-hed">More Episodes Coming Every Monday</div>
+        <div class="ep-coming-sub">Subscribe on Spotify or Apple Podcasts so you never miss one.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 The Glue Guy Podcast. All rights reserved.</span>
+      <div class="footer-social">
+        <a href="https://x.com/GlueGuyPodcast" target="_blank">X</a>
+        <a href="https://instagram.com/glueguypodcast" target="_blank">Instagram</a>
+        <a href="https://tiktok.com/@glueguypodcast" target="_blank">TikTok</a>
+        <a href="https://www.youtube.com/@GlueGuyPodcast" target="_blank">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
